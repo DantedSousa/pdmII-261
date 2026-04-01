@@ -1,2 +1,2 @@
-# pdmII-261
+# PDMII-26.1
 Repositório da Disciplina PDMII
