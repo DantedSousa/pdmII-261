@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+// New: import the home_widget package.
+import 'package:home_widget/home_widget.dart';
 
+import 'home_screen.dart';
 import 'news_data.dart';
+
 
 class ArticleScreen extends StatefulWidget {
   final NewsArticle article;
@@ -12,22 +16,34 @@ class ArticleScreen extends StatefulWidget {
 }
 
 class _ArticleScreenState extends State<ArticleScreen> {
+  final GlobalKey _globalKey = GlobalKey();
+  String? imagePath;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.article.title),
-        titleTextStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
-        ),
+        title: Text(widget.article.title!),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Updating home screen widget...')),
-          );
+        onPressed: () async {
+          if (_globalKey.currentContext != null) {
+            final RenderBox renderBox =
+                _globalKey.currentContext!.findRenderObject() as RenderBox;
+
+            final String path = await HomeWidget.renderFlutterWidget(
+              const LineChart(),
+              key: 'filename',
+              logicalSize: renderBox.size,
+              pixelRatio: MediaQuery.of(context).devicePixelRatio,
+            );
+
+            setState(() {
+              imagePath = path;
+            });
+          }
+
+          updateHeadline(widget.article);
         },
         label: const Text('Update Homescreen'),
       ),
@@ -35,14 +51,17 @@ class _ArticleScreenState extends State<ArticleScreen> {
         padding: const EdgeInsets.all(16.0),
         children: [
           Text(
-            widget.article.description,
+            widget.article.description!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: 20),
           Text(widget.article.articleText!),
-          const SizedBox(height: 20.0),
-          const Center(child: LineChart()),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: 20),
+          Center(
+            key: _globalKey,
+            child: const LineChart(),
+          ),
+          const SizedBox(height: 20),
           Text(widget.article.articleText!),
         ],
       ),
