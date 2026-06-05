@@ -1,3 +1,11 @@
+# Avaliação 01 - Configuração do Repositório GitHub
+
+## Enunciado
+
+**Professor:** Ricardo Duarte Taveira
+
+Executar exatamente as seguintes etapas para concluir essa atividade:
+
 1. Criar uma conta no GitHub;
 2. Criar um repositório chamado `pdmII-261`;
 3. Criar uma estrutura de pastas no repositório conforme as orientações definidas em sala;
@@ -23,6 +31,14 @@ pdmII-261/
 ├── avaliacao-08/
 ├── avaliacao-09/
 └── avaliacao-10/
+```
+
+## Ferramentas Utilizadas
+
+* Git
+* GitHub
+* Visual Studio Code
+* Dart
 
 ## Resultado
 
